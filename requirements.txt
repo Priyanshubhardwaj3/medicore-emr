@@ -1,5 +1,5 @@
 Django==4.2.13
-mysqlclient==2.2.1
+PyMySQL==1.1.0
 Pillow==10.2.0
 django-crispy-forms==2.1
 crispy-bootstrap5==0.7
@@ -35,5 +35,4 @@ boto3==1.34.69
 django-environ==0.11.2
 gunicorn==21.2.0
 whitenoise==6.6.0
-django-compressor==4.4
-psycopg2-binary==2.9.9 
+django-compressor==4.4 

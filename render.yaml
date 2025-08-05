@@ -13,5 +13,30 @@ services:
         value: False
       - key: DJANGO_SETTINGS_MODULE
         value: emr_project.settings_production
+      - key: DB_NAME
+        fromDatabase:
+          name: medicore-emr-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: medicore-emr-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: medicore-emr-db
+          property: password
+      - key: DB_HOST
+        fromDatabase:
+          name: medicore-emr-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: medicore-emr-db
+          property: port
     healthCheckPath: /
     autoDeploy: true
+
+  - type: pserv
+    name: medicore-emr-db
+    env: mysql
+    plan: free
