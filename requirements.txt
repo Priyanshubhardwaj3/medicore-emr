@@ -1,5 +1,5 @@
 Django==4.2.13
-PyMySQL==1.1.0
+psycopg2-binary==2.9.9
 Pillow==10.2.0
 django-crispy-forms==2.1
 crispy-bootstrap5==0.7
