@@ -1,0 +1,11 @@
+[Unit]
+Description=MediCore EMR socket
+
+[Socket]
+ListenStream=/run/medicore_emr.sock
+User=www-data
+Group=www-data
+Mode=0660
+
+[Install]
+WantedBy=sockets.target 

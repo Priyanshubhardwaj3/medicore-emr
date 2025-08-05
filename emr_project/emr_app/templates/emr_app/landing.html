@@ -1,0 +1,585 @@
+{% extends 'emr_app/base.html' %}
+
+{% block title %}MediCore EMR - Professional Healthcare Management System{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-background"></div>
+    <div class="container">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-6">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        Transform Your <span class="text-gradient">Healthcare</span> Management
+                    </h1>
+                    <p class="hero-subtitle">
+                        Professional Electronic Medical Records System designed for modern healthcare providers. 
+                        Streamline patient care, enhance efficiency, and ensure compliance with our comprehensive EMR solution.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="{% url 'signup' %}" class="btn btn-primary-custom btn-lg me-3">
+                            <i class="fas fa-rocket me-2"></i>Get Started Free
+                        </a>
+                        <a href="#features" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-play me-2"></i>Watch Demo
+                        </a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">10K+</span>
+                            <span class="stat-label">Patients Managed</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">99.9%</span>
+                            <span class="stat-label">Uptime</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">24/7</span>
+                            <span class="stat-label">Support</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-image">
+                    <div class="floating-card card-1">
+                        <i class="fas fa-user-md"></i>
+                        <span>Patient Records</span>
+                    </div>
+                    <div class="floating-card card-2">
+                        <i class="fas fa-stethoscope"></i>
+                        <span>Medical Checkups</span>
+                    </div>
+                    <div class="floating-card card-3">
+                        <i class="fas fa-pills"></i>
+                        <span>Prescriptions</span>
+                    </div>
+                    <div class="main-dashboard">
+                        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Healthcare Dashboard" class="dashboard-img">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="features-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="section-title">Why Choose <span class="text-gradient">MediCore EMR</span></h2>
+                <p class="section-subtitle">Comprehensive healthcare management solution designed for modern medical practices</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>HIPAA Compliant</h4>
+                    <p>Full compliance with healthcare data protection standards. Your patient data is secure and encrypted.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> End-to-end encryption</li>
+                        <li><i class="fas fa-check"></i> Audit trails</li>
+                        <li><i class="fas fa-check"></i> Access controls</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h4>Mobile Responsive</h4>
+                    <p>Access your patient records from any device, anywhere. Perfect for on-the-go healthcare providers.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Cross-platform compatibility</li>
+                        <li><i class="fas fa-check"></i> Offline capabilities</li>
+                        <li><i class="fas fa-check"></i> Touch-friendly interface</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>Advanced Analytics</h4>
+                    <p>Comprehensive reporting and analytics to help you make informed decisions about patient care.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Real-time dashboards</li>
+                        <li><i class="fas fa-check"></i> Custom reports</li>
+                        <li><i class="fas fa-check"></i> Trend analysis</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h4>Team Collaboration</h4>
+                    <p>Enable seamless collaboration between doctors, nurses, and administrative staff.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Role-based access</li>
+                        <li><i class="fas fa-check"></i> Real-time updates</li>
+                        <li><i class="fas fa-check"></i> Communication tools</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h4>Appointment Management</h4>
+                    <p>Efficiently manage patient appointments, schedules, and reminders with our integrated system.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Automated scheduling</li>
+                        <li><i class="fas fa-check"></i> SMS reminders</li>
+                        <li><i class="fas fa-check"></i> Calendar integration</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-medical"></i>
+                    </div>
+                    <h4>Comprehensive Records</h4>
+                    <p>Complete patient medical history, prescriptions, lab results, and treatment plans in one place.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Medical history tracking</li>
+                        <li><i class="fas fa-check"></i> Prescription management</li>
+                        <li><i class="fas fa-check"></i> Lab integration</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="section-title text-white">What Our <span class="text-gradient">Clients Say</span></h2>
+                <p class="section-subtitle text-white-50">Join thousands of healthcare professionals who trust MediCore EMR</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"MediCore EMR has transformed our practice. The interface is intuitive and the features are exactly what we needed."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Dr. Sarah Johnson" class="author-img">
+                        <div class="author-info">
+                            <h5>Dr. Sarah Johnson</h5>
+                            <span>Family Medicine</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"The security features give us peace of mind, and the mobile access has improved our workflow significantly."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Dr. Michael Chen" class="author-img">
+                        <div class="author-info">
+                            <h5>Dr. Michael Chen</h5>
+                            <span>Internal Medicine</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"Excellent customer support and regular updates. This system has streamlined our entire practice management."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Dr. Emily Rodriguez" class="author-img">
+                        <div class="author-info">
+                            <h5>Dr. Emily Rodriguez</h5>
+                            <span>Pediatrics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="cta-title">Ready to Transform Your Practice?</h2>
+                <p class="cta-subtitle">Join thousands of healthcare professionals who have already upgraded to MediCore EMR</p>
+                <div class="cta-buttons">
+                    <a href="{% url 'signup' %}" class="btn btn-primary-custom btn-lg me-3">
+                        <i class="fas fa-rocket me-2"></i>Start Free Trial
+                    </a>
+                    <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-sign-in-alt me-2"></i>Login
+                    </a>
+                </div>
+                <p class="cta-note">No credit card required • 30-day free trial • Cancel anytime</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Hero Section */
+    .hero-section {
+        position: relative;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        overflow: hidden;
+        min-height: 100vh;
+    }
+
+    .hero-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover;
+        opacity: 0.1;
+        z-index: 1;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+        line-height: 1.6;
+    }
+
+    .hero-buttons {
+        margin-bottom: 3rem;
+    }
+
+    .hero-stats {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-number {
+        display: block;
+        font-size: 2rem;
+        font-weight: 700;
+        color: #60a5fa;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+
+    /* Hero Image */
+    .hero-image {
+        position: relative;
+        height: 500px;
+    }
+
+    .main-dashboard {
+        position: relative;
+        z-index: 2;
+    }
+
+    .dashboard-img {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 1rem;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .floating-card {
+        position: absolute;
+        background: white;
+        padding: 1rem;
+        border-radius: 0.75rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 500;
+        color: var(--gray-800);
+        animation: float 3s ease-in-out infinite;
+    }
+
+    .floating-card i {
+        color: var(--primary-color);
+        font-size: 1.2rem;
+    }
+
+    .card-1 {
+        top: 10%;
+        left: -10%;
+        animation-delay: 0s;
+    }
+
+    .card-2 {
+        top: 30%;
+        right: -5%;
+        animation-delay: 1s;
+    }
+
+    .card-3 {
+        bottom: 20%;
+        left: 5%;
+        animation-delay: 2s;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+
+    /* Features Section */
+    .features-section {
+        padding: 5rem 0;
+        background: var(--light-bg);
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+        font-size: 1.1rem;
+        color: var(--gray-600);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .feature-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .feature-icon {
+        width: 4rem;
+        height: 4rem;
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+        border-radius: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .feature-card h4 {
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--gray-800);
+    }
+
+    .feature-card p {
+        color: var(--gray-600);
+        margin-bottom: 1.5rem;
+    }
+
+    .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .feature-list li {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+        color: var(--gray-700);
+    }
+
+    .feature-list i {
+        color: var(--success-color);
+        font-size: 0.9rem;
+    }
+
+    /* Testimonials Section */
+    .testimonials-section {
+        padding: 5rem 0;
+        background: linear-gradient(135deg, var(--gray-800) 0%, var(--gray-900) 100%);
+    }
+
+    .testimonial-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: var(--shadow-lg);
+        height: 100%;
+    }
+
+    .testimonial-content {
+        margin-bottom: 1.5rem;
+    }
+
+    .stars {
+        margin-bottom: 1rem;
+    }
+
+    .stars i {
+        color: #fbbf24;
+        margin-right: 0.25rem;
+    }
+
+    .testimonial-content p {
+        font-style: italic;
+        color: var(--gray-700);
+        line-height: 1.6;
+    }
+
+    .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .author-img {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .author-info h5 {
+        margin: 0;
+        font-weight: 600;
+        color: var(--gray-800);
+    }
+
+    .author-info span {
+        color: var(--gray-600);
+        font-size: 0.9rem;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        padding: 5rem 0;
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+        color: white;
+    }
+
+    .cta-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .cta-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+    }
+
+    .cta-buttons {
+        margin-bottom: 1.5rem;
+    }
+
+    .cta-note {
+        opacity: 0.8;
+        font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .hero-stats {
+            justify-content: center;
+        }
+
+        .floating-card {
+            display: none;
+        }
+
+        .section-title {
+            font-size: 2rem;
+        }
+    }
+</style>
+{% endblock %} 

@@ -1,0 +1,26 @@
+[Unit]
+Description=MediCore EMR Gunicorn daemon
+Requires=medicore_emr.socket
+After=network.target
+
+[Service]
+Type=notify
+User=www-data
+Group=www-data
+RuntimeDirectory=medicore_emr
+WorkingDirectory=/path/to/your/project
+Environment="PATH=/path/to/your/venv/bin"
+Environment="DJANGO_SETTINGS_MODULE=emr_project.settings_production"
+ExecStart=/path/to/your/venv/bin/gunicorn \
+    --access-logfile - \
+    --error-logfile - \
+    --workers 3 \
+    --bind unix:/run/medicore_emr.sock \
+    emr_project.wsgi:application
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target 

@@ -1,0 +1,329 @@
+{% extends 'emr_app/base.html' %}
+
+{% block title %}Register Patient - MediCore EMR{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="d-flex align-items-center">
+            <a href="{% url 'patient_list' %}" class="btn btn-outline-secondary me-3">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div>
+                <h1 class="h2 fw-bold text-gray-800 mb-2">
+                    <i class="fas fa-user-plus text-primary me-3"></i>Register New Patient
+                </h1>
+                <p class="text-muted mb-0">Add a new patient to the medical records system</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Registration Form -->
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-xl-6">
+        <div class="card-custom">
+            <div class="card-header-custom">
+                <h5 class="mb-0">
+                    <i class="fas fa-clipboard-list me-2"></i>Patient Information
+                </h5>
+            </div>
+            <div class="card-body p-4">
+                <form method="post" id="patientForm">
+                    {% csrf_token %}
+                    
+                    <!-- Personal Information Section -->
+                    <div class="mb-4">
+                        <h6 class="fw-bold text-gray-700 mb-3">
+                            <i class="fas fa-user me-2 text-primary"></i>Personal Information
+                        </h6>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label-custom">
+                                    <i class="fas fa-user me-1"></i>First Name *
+                                </label>
+                                {{ form.first_name }}
+                                {% if form.first_name.errors %}
+                                    <div class="text-danger small mt-1">
+                                        <i class="fas fa-exclamation-circle me-1"></i>
+                                        {{ form.first_name.errors|striptags }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label-custom">
+                                    <i class="fas fa-user me-1"></i>Last Name *
+                                </label>
+                                {{ form.last_name }}
+                                {% if form.last_name.errors %}
+                                    <div class="text-danger small mt-1">
+                                        <i class="fas fa-exclamation-circle me-1"></i>
+                                        {{ form.last_name.errors|striptags }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label-custom">
+                                    <i class="fas fa-birthday-cake me-1"></i>Date of Birth *
+                                </label>
+                                {{ form.date_of_birth }}
+                                {% if form.date_of_birth.errors %}
+                                    <div class="text-danger small mt-1">
+                                        <i class="fas fa-exclamation-circle me-1"></i>
+                                        {{ form.date_of_birth.errors|striptags }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label-custom">
+                                    <i class="fas fa-venus-mars me-1"></i>Gender *
+                                </label>
+                                {{ form.gender }}
+                                {% if form.gender.errors %}
+                                    <div class="text-danger small mt-1">
+                                        <i class="fas fa-exclamation-circle me-1"></i>
+                                        {{ form.gender.errors|striptags }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information Section -->
+                    <div class="mb-4">
+                        <h6 class="fw-bold text-gray-700 mb-3">
+                            <i class="fas fa-address-book me-2 text-success"></i>Contact Information
+                        </h6>
+                        
+                        <div class="mb-3">
+                            <label class="form-label-custom">
+                                <i class="fas fa-phone me-1"></i>Contact Number *
+                            </label>
+                            {{ form.contact_number }}
+                            {% if form.contact_number.errors %}
+                                <div class="text-danger small mt-1">
+                                    <i class="fas fa-exclamation-circle me-1"></i>
+                                    {{ form.contact_number.errors|striptags }}
+                                </div>
+                            {% endif %}
+                            <small class="text-muted">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Include country code if international (e.g., +1-555-123-4567)
+                            </small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label-custom">
+                                <i class="fas fa-map-marker-alt me-1"></i>Address *
+                            </label>
+                            {{ form.address }}
+                            {% if form.address.errors %}
+                                <div class="text-danger small mt-1">
+                                    <i class="fas fa-exclamation-circle me-1"></i>
+                                    {{ form.address.errors|striptags }}
+                                </div>
+                            {% endif %}
+                            <small class="text-muted">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Complete residential address including city, state, and postal code
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="d-flex gap-3 justify-content-end pt-3 border-top">
+                        <a href="{% url 'patient_list' %}" class="btn btn-outline-secondary btn-custom">
+                            <i class="fas fa-times me-2"></i>Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary-custom btn-custom" id="submitBtn">
+                            <i class="fas fa-save me-2"></i>Register Patient
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Success/Error Messages -->
+{% if messages %}
+    <div class="row justify-content-center mt-4">
+        <div class="col-lg-8 col-xl-6">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}-custom alert-custom alert-dismissible fade show" role="alert">
+                    {% if message.tags == 'success' %}
+                        <i class="fas fa-check-circle me-2"></i>
+                    {% elif message.tags == 'error' %}
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                    {% else %}
+                        <i class="fas fa-info-circle me-2"></i>
+                    {% endif %}
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+
+<!-- Help Section -->
+<div class="row justify-content-center mt-4">
+    <div class="col-lg-8 col-xl-6">
+        <div class="card-custom">
+            <div class="card-body p-4">
+                <h6 class="fw-bold text-gray-700 mb-3">
+                    <i class="fas fa-question-circle me-2 text-info"></i>Registration Guidelines
+                </h6>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>
+                                <small>All fields marked with * are required</small>
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>
+                                <small>Ensure contact number is accurate for emergencies</small>
+                            </li>
+                            <li class="mb-0">
+                                <i class="fas fa-check text-success me-2"></i>
+                                <small>Double-check date of birth for accuracy</small>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2">
+                                <i class="fas fa-shield-alt text-primary me-2"></i>
+                                <small>All patient data is encrypted and secure</small>
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-user-shield text-primary me-2"></i>
+                                <small>HIPAA compliant data handling</small>
+                            </li>
+                            <li class="mb-0">
+                                <i class="fas fa-lock text-primary me-2"></i>
+                                <small>Access restricted to authorized personnel</small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-control, .form-select {
+        border: 2px solid var(--gray-200);
+        border-radius: 0.5rem;
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        background-color: var(--white);
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        outline: none;
+    }
+
+    .form-label-custom {
+        font-weight: 500;
+        color: var(--gray-700);
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .text-danger {
+        color: var(--danger-color) !important;
+    }
+
+    .border-top {
+        border-top: 1px solid var(--gray-200) !important;
+    }
+
+    @media (max-width: 768px) {
+        .d-flex.gap-3 {
+            flex-direction: column;
+        }
+        
+        .btn-custom {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('patientForm');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    // Form validation
+    form.addEventListener('submit', function(e) {
+        const requiredFields = form.querySelectorAll('[required]');
+        let isValid = true;
+        
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                isValid = false;
+                field.classList.add('is-invalid');
+            } else {
+                field.classList.remove('is-invalid');
+            }
+        });
+        
+        if (!isValid) {
+            e.preventDefault();
+            alert('Please fill in all required fields.');
+            return;
+        }
+        
+        // Show loading state
+        submitBtn.innerHTML = '<span class="loading me-2"></span>Registering...';
+        submitBtn.disabled = true;
+    });
+    
+    // Real-time validation
+    const inputs = form.querySelectorAll('input, select, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            if (this.hasAttribute('required') && !this.value.trim()) {
+                this.classList.add('is-invalid');
+            } else {
+                this.classList.remove('is-invalid');
+            }
+        });
+        
+        input.addEventListener('input', function() {
+            if (this.classList.contains('is-invalid') && this.value.trim()) {
+                this.classList.remove('is-invalid');
+            }
+        });
+    });
+    
+    // Phone number formatting
+    const phoneInput = document.querySelector('input[name="contact_number"]');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 10) {
+                value = value.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+            }
+            e.target.value = value;
+        });
+    }
+});
+</script>
+{% endblock %}

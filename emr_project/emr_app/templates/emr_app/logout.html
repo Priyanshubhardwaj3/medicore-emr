@@ -1,0 +1,7 @@
+# emr_app/views.py
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+
+def logout_view(request):
+    logout(request)  # This logs out the user
+    return redirect('login')  # Redirect to the login page after logout

@@ -1,0 +1,37 @@
+{
+  "name": "MediCore EMR",
+  "description": "Professional Healthcare Management System",
+  "repository": "https://github.com/yourusername/medicore-emr",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "keywords": ["django", "healthcare", "emr", "medical"],
+  "env": {
+    "SECRET_KEY": {
+      "description": "A secret key for Django",
+      "generator": "secret"
+    },
+    "DEBUG": {
+      "description": "Debug mode",
+      "value": "False"
+    },
+    "DJANGO_SETTINGS_MODULE": {
+      "description": "Django settings module",
+      "value": "emr_project.settings_production"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ],
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "addons": [
+    {
+      "plan": "heroku-postgresql:mini"
+    }
+  ]
+} 

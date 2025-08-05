@@ -1,0 +1,683 @@
+{% extends 'emr_app/base.html' %}
+
+{% block title %}Dashboard - MediCore EMR{% endblock %}
+
+{% block content %}
+<!-- Welcome Hero Section -->
+<div class="welcome-hero mb-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <div class="welcome-content">
+                    <h1 class="welcome-title">
+                        Welcome back, <span class="text-gradient">{{ user.first_name|default:user.username }}</span>! 👋
+                    </h1>
+                    <p class="welcome-subtitle">
+                        Here's what's happening with your healthcare practice today
+                    </p>
+                    <div class="welcome-stats">
+                        <div class="stat-badge">
+                            <i class="fas fa-users"></i>
+                            <span>{{ total_patients|default:"0" }} Patients</span>
+                        </div>
+                        <div class="stat-badge">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>{{ recent_checkups|default:"0" }} Today</span>
+                        </div>
+                        <div class="stat-badge">
+                            <i class="fas fa-clock"></i>
+                            <span>{{ upcoming_appointments|default:"0" }} Pending</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="welcome-image">
+                    <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                         alt="Healthcare Dashboard" class="dashboard-preview">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row mb-5">
+    <div class="col-12">
+        <h2 class="section-title">
+            <i class="fas fa-bolt text-warning me-2"></i>Quick Actions
+        </h2>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="action-card">
+            <div class="action-icon">
+                <i class="fas fa-user-plus"></i>
+            </div>
+            <div class="action-content">
+                <h5>Register Patient</h5>
+                <p>Add new patients to the system with comprehensive medical information</p>
+                <a href="{% url 'register_patient' %}" class="btn btn-primary-custom btn-custom w-100">
+                    <i class="fas fa-plus me-2"></i>New Patient
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="action-card">
+            <div class="action-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="action-content">
+                <h5>View Patients</h5>
+                <p>Browse and manage all registered patients in the system</p>
+                <a href="{% url 'patient_list' %}" class="btn btn-info-custom btn-custom w-100">
+                    <i class="fas fa-list me-2"></i>Patient List
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="action-card">
+            <div class="action-icon">
+                <i class="fas fa-stethoscope"></i>
+            </div>
+            <div class="action-content">
+                <h5>Add Checkup</h5>
+                <p>Record new medical checkups and patient examinations</p>
+                <a href="{% url 'checkup_form' %}" class="btn btn-success-custom btn-custom w-100">
+                    <i class="fas fa-plus-circle me-2"></i>New Checkup
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="action-card">
+            <div class="action-icon">
+                <i class="fas fa-clipboard-list"></i>
+            </div>
+            <div class="action-content">
+                <h5>View Checkups</h5>
+                <p>Review all medical checkups and examination records</p>
+                <a href="{% url 'checkup_list' %}" class="btn btn-warning-custom btn-custom w-100">
+                    <i class="fas fa-eye me-2"></i>Checkup Records
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Statistics Overview -->
+<div class="row mb-5">
+    <div class="col-12">
+        <h2 class="section-title">
+            <i class="fas fa-chart-bar text-info me-2"></i>Practice Overview
+        </h2>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stat-card stat-primary">
+            <div class="stat-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-number">{{ total_patients|default:"0" }}</h3>
+                <p class="stat-label">Total Patients</p>
+                <div class="stat-trend positive">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>+12% this month</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stat-card stat-success">
+            <div class="stat-icon">
+                <i class="fas fa-stethoscope"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-number">{{ total_checkups|default:"0" }}</h3>
+                <p class="stat-label">Total Checkups</p>
+                <div class="stat-trend positive">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>+8% this week</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stat-card stat-info">
+            <div class="stat-icon">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-number">{{ recent_checkups|default:"0" }}</h3>
+                <p class="stat-label">This Month</p>
+                <div class="stat-trend positive">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>+15% vs last month</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stat-card stat-warning">
+            <div class="stat-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-number">{{ upcoming_appointments|default:"5" }}</h3>
+                <p class="stat-label">Pending Appointments</p>
+                <div class="stat-trend neutral">
+                    <i class="fas fa-minus"></i>
+                    <span>No change</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activity & Quick Access -->
+<div class="row mb-5">
+    <div class="col-lg-8 mb-4">
+        <div class="card-custom">
+            <div class="card-header-custom">
+                <h5 class="mb-0">
+                    <i class="fas fa-history text-primary me-2"></i>Recent Activity
+                </h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h6>New Patient Registered</h6>
+                            <p>John Doe was added to the system</p>
+                            <small class="text-muted">2 hours ago</small>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-stethoscope"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h6>Checkup Completed</h6>
+                            <p>Medical examination for Sarah Johnson</p>
+                            <small class="text-muted">4 hours ago</small>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-calendar-plus"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h6>Appointment Scheduled</h6>
+                            <p>Follow-up appointment for Mike Wilson</p>
+                            <small class="text-muted">1 day ago</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+        <div class="card-custom">
+            <div class="card-header-custom">
+                <h5 class="mb-0">
+                    <i class="fas fa-star text-warning me-2"></i>Quick Access
+                </h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="quick-links">
+                    <a href="{% url 'patient_list' %}" class="quick-link">
+                        <i class="fas fa-users"></i>
+                        <span>All Patients</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                    <a href="{% url 'checkup_list' %}" class="quick-link">
+                        <i class="fas fa-stethoscope"></i>
+                        <span>Checkup Records</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                    <a href="#" class="quick-link">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Appointments</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                    <a href="#" class="quick-link">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Reports</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                    <a href="#" class="quick-link">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- System Features -->
+<div class="row mb-5">
+    <div class="col-12">
+        <h2 class="section-title">
+            <i class="fas fa-star text-primary me-2"></i>System Features
+        </h2>
+    </div>
+    <div class="col-lg-6 mb-4">
+        <div class="feature-highlight">
+            <div class="feature-image">
+                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                     alt="Secure Healthcare" class="feature-img">
+            </div>
+            <div class="feature-content">
+                <h4><i class="fas fa-shield-alt text-success me-2"></i>Secure & Reliable</h4>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle text-success me-2"></i>HIPAA Compliant data protection</li>
+                    <li><i class="fas fa-check-circle text-success me-2"></i>End-to-end encryption</li>
+                    <li><i class="fas fa-check-circle text-success me-2"></i>Role-based access control</li>
+                    <li><i class="fas fa-check-circle text-success me-2"></i>Complete audit trail</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 mb-4">
+        <div class="feature-highlight">
+            <div class="feature-image">
+                <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                     alt="Advanced Features" class="feature-img">
+            </div>
+            <div class="feature-content">
+                <h4><i class="fas fa-rocket text-primary me-2"></i>Advanced Features</h4>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle text-primary me-2"></i>Real-time synchronization</li>
+                    <li><i class="fas fa-check-circle text-primary me-2"></i>Advanced search & filtering</li>
+                    <li><i class="fas fa-check-circle text-primary me-2"></i>Mobile responsive design</li>
+                    <li><i class="fas fa-check-circle text-primary me-2"></i>Comprehensive reporting</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Getting Started -->
+{% if not user.is_authenticated %}
+<div class="row">
+    <div class="col-12">
+        <div class="cta-card">
+            <div class="cta-content">
+                <div class="cta-icon">
+                    <i class="fas fa-sign-in-alt"></i>
+                </div>
+                <h3>Get Started Today</h3>
+                <p>Join thousands of healthcare professionals who trust MediCore EMR for their patient management needs.</p>
+                <div class="cta-buttons">
+                    <a href="{% url 'login' %}" class="btn btn-primary-custom btn-custom">
+                        <i class="fas fa-sign-in-alt me-2"></i>Login
+                    </a>
+                    <a href="{% url 'signup' %}" class="btn btn-success-custom btn-custom">
+                        <i class="fas fa-user-plus me-2"></i>Sign Up
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Welcome Hero */
+    .welcome-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 3rem 0;
+        border-radius: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .welcome-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .welcome-subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-bottom: 2rem;
+    }
+
+    .welcome-stats {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .stat-badge {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.75rem 1.5rem;
+        border-radius: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        backdrop-filter: blur(10px);
+    }
+
+    .welcome-image {
+        text-align: center;
+    }
+
+    .dashboard-preview {
+        width: 100%;
+        max-width: 300px;
+        border-radius: 1rem;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    /* Section Titles */
+    .section-title {
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: var(--gray-800);
+        margin-bottom: 1.5rem;
+    }
+
+    /* Action Cards */
+    .action-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+        height: 100%;
+        border: 1px solid var(--gray-100);
+    }
+
+    .action-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .action-icon {
+        width: 4rem;
+        height: 4rem;
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+        border-radius: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .action-content h5 {
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--gray-800);
+    }
+
+    .action-content p {
+        color: var(--gray-600);
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    /* Stat Cards */
+    .stat-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--gray-100);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+    }
+
+    .stat-primary::before { background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); }
+    .stat-success::before { background: linear-gradient(135deg, var(--success-color) 0%, #047857 100%); }
+    .stat-info::before { background: linear-gradient(135deg, var(--info-color) 0%, #0e7490 100%); }
+    .stat-warning::before { background: linear-gradient(135deg, var(--warning-color) 0%, #b45309 100%); }
+
+    .stat-icon {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+    }
+
+    .stat-primary .stat-icon { background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); }
+    .stat-success .stat-icon { background: linear-gradient(135deg, var(--success-color) 0%, #047857 100%); }
+    .stat-info .stat-icon { background: linear-gradient(135deg, var(--info-color) 0%, #0e7490 100%); }
+    .stat-warning .stat-icon { background: linear-gradient(135deg, var(--warning-color) 0%, #b45309 100%); }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: var(--gray-800);
+    }
+
+    .stat-label {
+        color: var(--gray-600);
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+    }
+
+    .stat-trend {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .stat-trend.positive { color: var(--success-color); }
+    .stat-trend.negative { color: var(--danger-color); }
+    .stat-trend.neutral { color: var(--gray-500); }
+
+    /* Activity List */
+    .activity-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .activity-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1rem;
+        background: var(--gray-50);
+        border-radius: 0.75rem;
+        transition: all 0.3s ease;
+    }
+
+    .activity-item:hover {
+        background: var(--gray-100);
+        transform: translateX(5px);
+    }
+
+    .activity-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        background: var(--primary-color);
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+    }
+
+    .activity-content h6 {
+        margin: 0 0 0.25rem 0;
+        font-weight: 600;
+        color: var(--gray-800);
+    }
+
+    .activity-content p {
+        margin: 0 0 0.25rem 0;
+        color: var(--gray-600);
+        font-size: 0.9rem;
+    }
+
+    /* Quick Links */
+    .quick-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .quick-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        background: var(--gray-50);
+        border-radius: 0.75rem;
+        text-decoration: none;
+        color: var(--gray-700);
+        transition: all 0.3s ease;
+    }
+
+    .quick-link:hover {
+        background: var(--primary-color);
+        color: white;
+        transform: translateX(5px);
+    }
+
+    .quick-link i:first-child {
+        margin-right: 0.75rem;
+        width: 1rem;
+        text-align: center;
+    }
+
+    /* Feature Highlights */
+    .feature-highlight {
+        background: white;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        height: 100%;
+    }
+
+    .feature-image {
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .feature-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .feature-content {
+        padding: 2rem;
+    }
+
+    .feature-content h4 {
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--gray-800);
+    }
+
+    .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .feature-list li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        color: var(--gray-700);
+    }
+
+    /* CTA Card */
+    .cta-card {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+        color: white;
+        padding: 3rem;
+        border-radius: 1rem;
+        text-align: center;
+    }
+
+    .cta-icon {
+        width: 4rem;
+        height: 4rem;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin: 0 auto 1.5rem;
+    }
+
+    .cta-content h3 {
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .cta-content p {
+        opacity: 0.9;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .welcome-title {
+            font-size: 2rem;
+        }
+
+        .welcome-stats {
+            justify-content: center;
+        }
+
+        .stat-badge {
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+        }
+
+        .cta-buttons {
+            flex-direction: column;
+        }
+    }
+</style>
+{% endblock %}

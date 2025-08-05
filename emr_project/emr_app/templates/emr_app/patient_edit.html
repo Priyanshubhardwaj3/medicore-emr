@@ -1,0 +1,559 @@
+{% extends 'emr_app/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Edit {{ patient.full_name }} - Patient Details{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-section {
+        background: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+    }
+    
+    .section-header {
+        border-bottom: 2px solid #e5e7eb;
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+        color: #374151;
+    }
+    
+    .form-row {
+        margin-bottom: 1.5rem;
+    }
+    
+    .required-field::after {
+        content: " *";
+        color: #dc2626;
+    }
+    
+    .help-text {
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin-top: 0.25rem;
+    }
+    
+    .photo-upload {
+        border: 2px dashed #d1d5db;
+        border-radius: 0.5rem;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+    
+    .photo-upload:hover {
+        border-color: #2563eb;
+        background-color: #f8fafc;
+    }
+    
+    .photo-preview {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #e5e7eb;
+        margin: 0 auto 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1 class="h3 mb-1">Edit Patient Information</h1>
+                    <p class="text-muted mb-0">{{ patient.full_name }}</p>
+                </div>
+                <a href="{% url 'patient_detail' patient.patient_id %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-1"></i>Back to Patient
+                </a>
+            </div>
+
+            <form method="post" enctype="multipart/form-data" id="patient-edit-form">
+                {% csrf_token %}
+                
+                <!-- Basic Information -->
+                <div class="form-section">
+                    <h4 class="section-header">
+                        <i class="fas fa-user me-2"></i>Basic Information
+                    </h4>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="{{ form.first_name.id_for_label }}" class="form-label required-field">First Name</label>
+                                {{ form.first_name }}
+                                {% if form.first_name.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.first_name.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="{{ form.middle_name.id_for_label }}" class="form-label">Middle Name</label>
+                                {{ form.middle_name }}
+                                {% if form.middle_name.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.middle_name.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="{{ form.last_name.id_for_label }}" class="form-label required-field">Last Name</label>
+                                {{ form.last_name }}
+                                {% if form.last_name.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.last_name.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="{{ form.date_of_birth.id_for_label }}" class="form-label required-field">Date of Birth</label>
+                                {{ form.date_of_birth }}
+                                {% if form.date_of_birth.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.date_of_birth.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="{{ form.gender.id_for_label }}" class="form-label required-field">Gender</label>
+                                {{ form.gender }}
+                                {% if form.gender.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.gender.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="{{ form.marital_status.id_for_label }}" class="form-label">Marital Status</label>
+                                {{ form.marital_status }}
+                                {% if form.marital_status.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.marital_status.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.occupation.id_for_label }}" class="form-label">Occupation</label>
+                                {{ form.occupation }}
+                                {% if form.occupation.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.occupation.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.preferred_language.id_for_label }}" class="form-label">Preferred Language</label>
+                                {{ form.preferred_language }}
+                                {% if form.preferred_language.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.preferred_language.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="form-section">
+                    <h4 class="section-header">
+                        <i class="fas fa-phone me-2"></i>Contact Information
+                    </h4>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.contact_number.id_for_label }}" class="form-label required-field">Phone Number</label>
+                                {{ form.contact_number }}
+                                {% if form.contact_number.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.contact_number.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.email.id_for_label }}" class="form-label">Email Address</label>
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.email.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.address.id_for_label }}" class="form-label required-field">Address</label>
+                        {{ form.address }}
+                        {% if form.address.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.address.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="{{ form.city.id_for_label }}" class="form-label required-field">City</label>
+                                {{ form.city }}
+                                {% if form.city.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.city.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="{{ form.state.id_for_label }}" class="form-label required-field">State</label>
+                                {{ form.state }}
+                                {% if form.state.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.state.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="{{ form.zip_code.id_for_label }}" class="form-label required-field">ZIP Code</label>
+                                {{ form.zip_code }}
+                                {% if form.zip_code.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.zip_code.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="{{ form.country.id_for_label }}" class="form-label">Country</label>
+                                {{ form.country }}
+                                {% if form.country.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.country.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medical Information -->
+                <div class="form-section">
+                    <h4 class="section-header">
+                        <i class="fas fa-notes-medical me-2"></i>Medical Information
+                    </h4>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="{{ form.blood_type.id_for_label }}" class="form-label">Blood Type</label>
+                                {{ form.blood_type }}
+                                {% if form.blood_type.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.blood_type.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="{{ form.height.id_for_label }}" class="form-label">Height (cm)</label>
+                                {{ form.height }}
+                                {% if form.height.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.height.errors.0 }}
+                                    </div>
+                                {% endif %}
+                                <div class="help-text">Enter height in centimeters</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="{{ form.weight.id_for_label }}" class="form-label">Weight (kg)</label>
+                                {{ form.weight }}
+                                {% if form.weight.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.weight.errors.0 }}
+                                    </div>
+                                {% endif %}
+                                <div class="help-text">Enter weight in kilograms</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.smoking_status.id_for_label }}" class="form-label">Smoking Status</label>
+                                {{ form.smoking_status }}
+                                {% if form.smoking_status.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.smoking_status.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.alcohol_consumption.id_for_label }}" class="form-label">Alcohol Consumption</label>
+                                {{ form.alcohol_consumption }}
+                                {% if form.alcohol_consumption.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.alcohol_consumption.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.allergies.id_for_label }}" class="form-label">Allergies</label>
+                        {{ form.allergies }}
+                        {% if form.allergies.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.allergies.errors.0 }}
+                            </div>
+                        {% endif %}
+                        <div class="help-text">List any known allergies (e.g., Penicillin, Peanuts, etc.)</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.medical_history.id_for_label }}" class="form-label">Medical History</label>
+                        {{ form.medical_history }}
+                        {% if form.medical_history.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.medical_history.errors.0 }}
+                            </div>
+                        {% endif %}
+                        <div class="help-text">Previous medical conditions, surgeries, chronic illnesses, etc.</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.current_medications.id_for_label }}" class="form-label">Current Medications</label>
+                        {{ form.current_medications }}
+                        {% if form.current_medications.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.current_medications.errors.0 }}
+                            </div>
+                        {% endif %}
+                        <div class="help-text">Current medications and dosages</div>
+                    </div>
+                </div>
+
+                <!-- Emergency Contact -->
+                <div class="form-section">
+                    <h4 class="section-header">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Emergency Contact
+                    </h4>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="{{ form.emergency_contact_name.id_for_label }}" class="form-label required-field">Emergency Contact Name</label>
+                                {{ form.emergency_contact_name }}
+                                {% if form.emergency_contact_name.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.emergency_contact_name.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="{{ form.emergency_contact_phone.id_for_label }}" class="form-label required-field">Emergency Contact Phone</label>
+                                {{ form.emergency_contact_phone }}
+                                {% if form.emergency_contact_phone.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.emergency_contact_phone.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="{{ form.emergency_contact_relationship.id_for_label }}" class="form-label required-field">Relationship</label>
+                                {{ form.emergency_contact_relationship }}
+                                {% if form.emergency_contact_relationship.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.emergency_contact_relationship.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Insurance Information -->
+                <div class="form-section">
+                    <h4 class="section-header">
+                        <i class="fas fa-shield-alt me-2"></i>Insurance Information
+                    </h4>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.insurance_provider.id_for_label }}" class="form-label">Insurance Provider</label>
+                                {{ form.insurance_provider }}
+                                {% if form.insurance_provider.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.insurance_provider.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.insurance_number.id_for_label }}" class="form-label">Insurance Number</label>
+                                {{ form.insurance_number }}
+                                {% if form.insurance_number.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.insurance_number.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.insurance_expiry.id_for_label }}" class="form-label">Insurance Expiry Date</label>
+                        {{ form.insurance_expiry }}
+                        {% if form.insurance_expiry.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.insurance_expiry.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Photo Upload -->
+                <div class="form-section">
+                    <h4 class="section-header">
+                        <i class="fas fa-camera me-2"></i>Patient Photo
+                    </h4>
+                    
+                    <div class="photo-upload">
+                        {% if patient.photo %}
+                            <img src="{{ patient.photo.url }}" alt="Current photo" class="photo-preview">
+                            <p class="text-muted">Current photo</p>
+                        {% else %}
+                            <i class="fas fa-user fa-4x text-muted mb-3"></i>
+                            <p class="text-muted">No photo uploaded</p>
+                        {% endif %}
+                        
+                        <div class="form-group">
+                            <label for="{{ form.photo.id_for_label }}" class="form-label">Upload New Photo</label>
+                            {{ form.photo }}
+                            {% if form.photo.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.photo.errors.0 }}
+                                </div>
+                            {% endif %}
+                            <div class="help-text">Upload a clear photo of the patient (JPG, PNG)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="{% url 'patient_detail' patient.patient_id %}" class="btn btn-outline-secondary">
+                        <i class="fas fa-times me-1"></i>Cancel
+                    </a>
+                    <div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i>Save Changes
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Form validation
+        $('#patient-edit-form').on('submit', function(e) {
+            var isValid = true;
+            
+            // Check required fields
+            $('.required-field').each(function() {
+                var field = $(this).attr('for');
+                var input = $('#' + field);
+                if (!input.val()) {
+                    input.addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    input.removeClass('is-invalid');
+                }
+            });
+            
+            if (!isValid) {
+                e.preventDefault();
+                alert('Please fill in all required fields.');
+                return false;
+            }
+        });
+        
+        // Real-time validation
+        $('input, select, textarea').on('blur', function() {
+            var field = $(this);
+            var fieldId = field.attr('id');
+            var label = $('label[for="' + fieldId + '"]');
+            
+            if (label.hasClass('required-field') && !field.val()) {
+                field.addClass('is-invalid');
+            } else {
+                field.removeClass('is-invalid');
+            }
+        });
+        
+        // Photo preview
+        $('#id_photo').on('change', function() {
+            var file = this.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('.photo-preview').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+</script>
+{% endblock %} 
