@@ -38,5 +38,5 @@ services:
 
   - type: pserv
     name: medicore-emr-db
-    env: mysql
+    env: postgres
     plan: free
