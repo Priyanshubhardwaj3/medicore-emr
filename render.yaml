@@ -3,7 +3,7 @@ services:
     name: medicore-emr
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: python manage.py migrate && python manage.py collectstatic --noinput && gunicorn emr_project.wsgi:application --bind 0.0.0.0:$PORT
+    startCommand: cd emr_project && python manage.py migrate && python manage.py collectstatic --noinput && gunicorn emr_project.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.10
