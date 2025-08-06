@@ -751,7 +751,7 @@ class PatientFilter(FilterSet):
     
     class Meta:
         model = Patient
-        fields = ['search', 'blood_type', 'gender']  # Removed age_min, age_max
+        fields = ['search', 'blood_type', 'gender']
     
     def search_filter(self, queryset, name, value):
         return queryset.filter(

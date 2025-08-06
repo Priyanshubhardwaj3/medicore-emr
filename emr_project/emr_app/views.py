@@ -33,13 +33,6 @@ from .forms import (
 
 logger = logging.getLogger(__name__)
 
-# Landing Page View
-def landing(request):
-    """Landing page for non-authenticated users"""
-    if request.user.is_authenticated:
-        return redirect('home')
-    return render(request, 'emr_app/landing.html')
-
 # Utility functions
 def is_doctor(user):
     """Check if user is a doctor"""
@@ -116,9 +109,9 @@ def home(request):
         context.update({
             'total_patients': Patient.objects.filter(is_active=True).count(),
             'total_checkups': Checkup.objects.count(),
-            'recent_checkups': Checkup.objects.filter(
+            'recent_checkups': Checkup.objects.count() if Checkup.objects.filter(
                 checkup_date__gte=timezone.now() - timedelta(days=30)
-            ).count(),
+            ).exists() else 0,
             'total_appointments': Appointment.objects.count(),
             'todays_appointments': Appointment.objects.filter(
                 appointment_date__date=timezone.now().date(),
