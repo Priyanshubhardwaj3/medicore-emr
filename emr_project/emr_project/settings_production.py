@@ -3,12 +3,8 @@ Production settings for MediCore EMR project.
 """
 
 import os
-import pymysql
 from pathlib import Path
 from .settings import *
-
-# Configure PyMySQL
-pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,6 +22,7 @@ ALLOWED_HOSTS = [
     'your-ip-address',
     'localhost',
     '127.0.0.1',
+    '.onrender.com',  # Allow Render domains
 ]
 
 # Database configuration for production
@@ -109,6 +106,7 @@ LOGGING = {
 CORS_ALLOWED_ORIGINS = [
     "https://your-domain.com",
     "https://www.your-domain.com",
+    "https://*.onrender.com",  # Allow Render domains
 ]
 
 CORS_ALLOW_CREDENTIALS = True
